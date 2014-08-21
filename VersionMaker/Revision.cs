@@ -19,35 +19,35 @@ namespace VersionMaker
 		{
 			return revision + "|" + path + "|" + file + "|" + size;
 		}
-
-#if SVN
+		#region SVN
 		public Revision(XmlNode node, string basePath)
 		{
-			revision = Compress.getFileRevision(node);
-			path = Compress.getFileBasePath(node, basePath);
+			revision = Compress.getFileRevisionSVN(node);
+			path = Compress.getFileBasePathSVN(node, basePath);
 			file = Compress.getFileName(node);
-			size = Compress.getFileSize(node);
+			size = Compress.getFileSizeSVN(node);
 		}
 
-		public void append(XmlNode node)
+		public void appendSVN(XmlNode node)
 		{
 			file += "," + Compress.getFileName(node);
-			size += "," + Compress.getFileSize(node);
+			size += "," + Compress.getFileSizeSVN(node);
 		}
-#else
+		#endregion
+		#region GIT
 		public Revision(string[] attribs, string basePath)
 		{
 			revision = attribs[2];
-			path = Compress.getFileBasePath(attribs[4], basePath);
-			file = Compress.getFileName(attribs[4]);
+			path = Compress.getFileBasePathGIT(attribs[4], basePath);
+			file = Compress.getFileNameGIT(attribs[4]);
 			size = attribs[3];
 		}
 
-		public void append(string file, string size)
+		public void appendGIT(string file, string size)
 		{
 			this.file += "," + file;
 			this.size += "," + size;
 		}
-#endif
+		#endregion
 	}
 }

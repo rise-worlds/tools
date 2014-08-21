@@ -63,8 +63,8 @@ namespace VersionMaker
 			}
 		}
 
-#if SVN
-		public void parseStr(string data, string basePath)
+		#region SVN
+		public void parseStrSVN(string data, string basePath)
 		{
 			XmlDocument doc = new XmlDocument();
 			try
@@ -74,7 +74,7 @@ namespace VersionMaker
 				foreach (XmlNode node in root.ChildNodes)
 				{
 					if (node.Attributes["kind"].Value == "dir") continue;
-					Revision r = findRev(getFileRevision(node), getFileBasePath(node, basePath));
+					Revision r = findRev(getFileRevisionSVN(node), getFileBasePathSVN(node, basePath));
 					if (null == r)
 					{
 						r = new Revision(node, basePath);
@@ -82,7 +82,7 @@ namespace VersionMaker
 					}
 					else
 					{
-						r.append(node);
+						r.appendSVN(node);
 					}
 				}
 			}
@@ -94,7 +94,7 @@ namespace VersionMaker
 			doc = null;
 		}
 
-		public static string getFileBasePath(XmlNode node, string basePath)
+		public static string getFileBasePathSVN(XmlNode node, string basePath)
 		{
 			string path = node["name"].InnerText;
 			int indexOf = path.LastIndexOf('/');
@@ -118,17 +118,18 @@ namespace VersionMaker
 			return name;
 		}
 
-		public static string getFileRevision(XmlNode node)
+		public static string getFileRevisionSVN(XmlNode node)
 		{
 			return node["commit"].Attributes["revision"].Value;
 		}
 
-		public static string getFileSize(XmlNode node)
+		public static string getFileSizeSVN(XmlNode node)
 		{
 			return node["size"].InnerText;
 		}
-#else
-		public void parseStr(string data, string basePath)
+		#endregion
+		#region GIT
+		public void parseStrGIT(string data, string basePath)
 		{
 			string[] nodes = data.Split('\n');
 			int length = nodes.Length;
@@ -136,7 +137,7 @@ namespace VersionMaker
 			{
 				string[] attribs = Regex.Split(nodes[i], @"\s+");
 				if (attribs.Length <= 1 || attribs[1] != "blob") continue;
-				Revision r = findRev(attribs[2], getFileBasePath(attribs[4], basePath));
+				Revision r = findRev(attribs[2], getFileBasePathGIT(attribs[4], basePath));
 				if (null == r)
 				{
 					r = new Revision(attribs, basePath);
@@ -144,12 +145,12 @@ namespace VersionMaker
 				}
 				else
 				{
-					r.append(getFileName(attribs[4]), attribs[3]);
+					r.appendGIT(getFileNameGIT(attribs[4]), attribs[3]);
 				}
 			}
 		}
 
-		public static string getFileBasePath(string path, string basePath)
+		public static string getFileBasePathGIT(string path, string basePath)
 		{
 			int indexOf = path.LastIndexOf('/');
 			if (0 <= indexOf)
@@ -164,12 +165,12 @@ namespace VersionMaker
 			return path;
 		}
 
-		public static string getFileName(string path)
+		public static string getFileNameGIT(string path)
 		{
 			string name = path.Substring(path.LastIndexOf('/') + 1);
 
 			return name;
 		}
-#endif
+		#endregion
 	}
 }

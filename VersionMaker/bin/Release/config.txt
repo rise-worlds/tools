@@ -1,4 +1,4 @@
-D:\GitHub\game\tools\VersionMaker\revision.txt
+D:\project\client\game\bin\revision.txt
 2
-D:\GitHub\game\tools\VersionMaker
-D:\project\as3_client\game\bin\asserts\data,data
+git,D:\project\client\game\bin
+svn,D:\project\client\game\bin\data,data
