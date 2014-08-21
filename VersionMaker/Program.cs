@@ -19,6 +19,7 @@ namespace VersionMaker
 			Console.WriteLine(@"start make revision.");
 			using (StreamReader reader = new StreamReader(path))
 			{
+				string name = reader.ReadLine();
 				int count = Convert.ToInt32(reader.ReadLine());
 				using (Compress compress = new Compress())
 				{
@@ -28,7 +29,7 @@ namespace VersionMaker
 						string[] paths = line.Split(',');
 						compress.parseXmlStr(run(paths[0]), paths.Length <= 1 ? "" : paths[1]);
 					}
-					compress.writeFile(reader.ReadLine());
+					compress.writeFile(name);
 				}
 				reader.Close();
 			}
