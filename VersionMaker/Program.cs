@@ -27,7 +27,7 @@ namespace VersionMaker
 					{
 						string line = reader.ReadLine();
 						string[] paths = line.Split(',');
-						compress.parseXmlStr(run(paths[0]), paths.Length <= 1 ? "" : paths[1]);
+						compress.parseStr(run(paths[0]), paths.Length <= 1 ? "" : paths[1]);
 					}
 					compress.writeFile(name);
 				}
@@ -42,8 +42,13 @@ namespace VersionMaker
 		{
 			using (Process process = new System.Diagnostics.Process())
 			{
+#if SVN
 				process.StartInfo.FileName = "svn";
 				process.StartInfo.Arguments = "list -r HEAD -R --xml";
+#else
+				process.StartInfo.FileName = "git";
+				process.StartInfo.Arguments = "ls-tree -l -r --abbrev HEAD";
+#endif
 				process.StartInfo.WorkingDirectory = path;
 				// 必须禁用操作系统外壳程序  
 				process.StartInfo.UseShellExecute = false;

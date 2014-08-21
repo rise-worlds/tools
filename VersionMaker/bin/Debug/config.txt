@@ -1,4 +1,4 @@
 D:\GitHub\game\tools\VersionMaker\revision.txt
-2
+1
 D:\GitHub\game\tools\VersionMaker
 D:\project\as3_client\game\bin\asserts\data,data
