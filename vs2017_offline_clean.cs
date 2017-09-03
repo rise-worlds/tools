@@ -10,7 +10,16 @@ class Program
 {
     static void Main(string[] args)
     {
-        string path = Directory.GetCurrentDirectory();
+        string path = string.Empty;
+        if (args.Length == 0)
+        {
+            path = Directory.GetCurrentDirectory();
+        }
+        else
+        {
+            path = args[0];
+        }
+
         if (path.EndsWith("\\") == false) path += "\\";
         string catalog = path + "catalog.json";
         if (File.Exists(catalog) == false)
