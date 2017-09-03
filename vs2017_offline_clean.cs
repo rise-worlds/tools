@@ -1,3 +1,11 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
+
 class Program
 {
     static void Main(string[] args)
@@ -10,8 +18,9 @@ class Program
             Console.WriteLine("Please copy this program to the VS2017 offline folder.");
             return;
         }
+        Console.WriteLine(path);
         string old = Directory.CreateDirectory(path + "- old -").FullName;
-        var o = fastJSON.JSON.ToDynamic(File.ReadAllText(catalog));
+        var o = JsonConvert.DeserializeObject<dynamic>(File.ReadAllText(catalog));
 
         var folders = Directory.GetDirectories(path);
         var packages = o["packages"];
