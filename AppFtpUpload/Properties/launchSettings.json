@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "AppFtpUpload": {
+      "commandName": "Project",
+      "commandLineArgs": "-f D:\\SkyEntertain\\bin\\release\\android\\测试服-02.06.apk"
+    }
+  }
+}
