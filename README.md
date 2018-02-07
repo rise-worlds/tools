@@ -7,7 +7,7 @@ _my project use tools_
 unload a file to all lan ftp server of specifies port.
 
 ```
-AppFtpUnload -f|--file path -ip ip -port port -?|-h|--help
+dotnet .\AppFtpUnload -f|--file path -ip ip -port port -?|-h|--help
 -f|--file path      local file path
 -ip ip              local lan ip [192.168.1.1]
 -port port          ftp server port
@@ -16,9 +16,8 @@ AppFtpUnload -f|--file path -ip ip -port port -?|-h|--help
 
 <i>sample</i>
 
-```
-AppFtpUnload -f c:\test.apk -port 2121
-```
+> AppFtpUnload -f c:\test.apk -port 2121
+
 
 ## VersionMaker
 
